@@ -22,6 +22,7 @@ def decompress(data, recurse):
             answer += 1
     return answer
 
+### From here, my crapy (but working) solution:
 
 def string_to_entity_array(s):
 	i=0
