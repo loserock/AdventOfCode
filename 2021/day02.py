@@ -39,5 +39,5 @@ def main():
     print(f"Third star of 2021: {r1}; fourth star: {r2}")
 
 
-if __name__=="__main___":
+if __name__=="__main__":
     main()
