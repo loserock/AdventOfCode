@@ -18,7 +18,7 @@ def solve(s: str) -> (int, int):
 
 def main():
     global s
-    s=s[1:]
+    # s=s[1:]
     r1, r2 = solve(s)
     print(f"Answears:\t for the first star: {r1}\n   \t\tfor the second star: {r2}")
 
@@ -1023,7 +1023,7 @@ s="""
 89844   36377
 43375   90916
 62268   92108
-"""
+""".strip()
 
 if __name__=="__main__":
     main()
