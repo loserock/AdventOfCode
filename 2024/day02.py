@@ -5,13 +5,37 @@ from numpy import *
 
 def solve(s: str) -> (int, int):
     data = [array(list(map(int, l.split()))) for l in s.splitlines()]
+    # first: Count the num of *Safe Reports*
+    # Safe Reports are the all number increasing OR decreasing monotonically, where
+    # every step is between 1 and 3 (all increase or all decrease)
     first = 0
     for rep in data:
         incr = rep[1:]-rep[:-1]
         if (incr.min() >= 1 and incr.max() <= 3) or (incr.min() >= -3 and incr.max() <= -1):
             first += 1
-    
-    second = nan
+
+    # second: Now every reports can be counted as *Safe* if it can be safe
+    # by removing one (and only one) element from the series
+    second = 0  # store the number of counted solutions
+    chk = lambda diff_series: (diff_series.min() >= 1 and diff_series.max() <= 3) or (diff_series.min() >= -3 and diff_series.max() <= -1)
+    for rep in data:
+        incr = rep[1:]-rep[:-1]
+        if chk(incr):
+            second += 1
+            continue
+        n_p_incr, n_n_incr, n_z_incr = sum(incr > 0), sum(incr < 0), sum(incr == 0)
+        if n_z_incr > 1:
+            continue
+        if n_p_incr > n_n_incr and (n_n_incr+n_z_incr > 1):
+            continue
+        if n_n_incr > n_p_incr and (n_p_incr+n_z_incr > 1):
+            continue
+        for i in range(len(rep)):
+            rep_shorter = delete(rep, i)
+            if chk(rep_shorter[1:]-rep_shorter[:-1]):
+                second += 1
+                break
+
     return first, second
 
 
